@@ -1,0 +1,26 @@
+{
+    "name": "davidiq/AdvancedPolls",
+    "type": "phpbb-extension",
+    "description": "Allows users to create polls with multiple groupings and display the results details right on the first post.",
+    "homepage": "https://github.com/DavidIQ/phpBB-AdvancedPolls",
+    "version": "1.0.0-dev",
+    "time": "2016-12-23",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "David Col??n",
+            "email": "davidiq@phpbb.com",
+            "homepage": "http://www.davidiq.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "Developer"
+    },
+    "extra": {
+        "display-name": "Advanced Polls",
+        "soft-require": {
+            "phpbb/phpbb": ">=3.1.10,<3.2.0@dev"
+        }
+    }
+}
