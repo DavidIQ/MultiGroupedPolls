@@ -1,10 +1,10 @@
-# Advanced Polls
+# Multi-Grouped Polls
 
 ## Installation
 
-Copy the extension to phpBB/ext/davidiq/AdvancedPolls
+Copy the extension to phpBB/ext/davidiq/MultiGroupedPolls
 
-Go to "ACP" > "Customise" > "Extensions" and enable the "Advanced Polls" extension.
+Go to "ACP" > "Customise" > "Extensions" and enable the "Multi-Grouped Polls" extension.
 
 ## Tests and Continuous Integration
 
@@ -13,11 +13,11 @@ To run the tests locally, you need to install phpBB from its Git repository. Aft
 
 Windows:
 
-    phpBB\vendor\bin\phpunit.bat -c phpBB\ext\davidiq\AdvancedPolls\phpunit.xml.dist
+    phpBB\vendor\bin\phpunit.bat -c phpBB\ext\davidiq\MultiGroupedPolls\phpunit.xml.dist
 
 others:
 
-    phpBB/vendor/bin/phpunit -c phpBB/ext/davidiq/AdvancedPolls/phpunit.xml.dist
+    phpBB/vendor/bin/phpunit -c phpBB/ext/davidiq/MultiGroupedPolls/phpunit.xml.dist
 
 ## License
 

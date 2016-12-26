@@ -1,6 +1,6 @@
 services:
-    davidiq.AdvancedPolls.listener:
-        class: davidiq\AdvancedPolls\event\main_listener
+    davidiq.MultiGroupedPolls.listener:
+        class: davidiq\MultiGroupedPolls\event\main_listener
         arguments:
             - @dbal.conn
             - @template

@@ -8,7 +8,7 @@
  *
  */
 
-namespace davidiq\AdvancedPolls\event;
+namespace davidiq\MultiGroupedPolls\event;
 
 /**
  * @ignore
@@ -16,7 +16,7 @@ namespace davidiq\AdvancedPolls\event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Advanced Polls Event listener.
+ * Multi-Grouped Polls Event listener.
  */
 class main_listener implements EventSubscriberInterface
 {
@@ -33,7 +33,7 @@ class main_listener implements EventSubscriberInterface
      *
      * @param \phpbb\db\driver\driver_interface        	$db             dbal object
      * @param \phpbb\template\template    $template           Template object
-     * @return \davidiq\AdvancedPolls\event\listener
+     * @return \davidiq\MultiGroupedPolls\event\listener
      * @access public
      */
     public function __construct(\phpbb\db\driver\driver_interface $db, \phpbb\template\template $template)
@@ -56,9 +56,9 @@ class main_listener implements EventSubscriberInterface
 	 */
 	public function viewtopic_modify_poll_template_data($event)
 	{
-        // Check the poll options to see if it is an advanced poll
+        // Check the poll options to see if it is a multi-grouped poll
         $poll_options_template_data = $event['poll_options_template_data'];
-        $is_advanced_poll = false;
+        $is_multigrouped_poll = false;
 
         if (count($poll_options_template_data) > 2)
         {
@@ -67,11 +67,11 @@ class main_listener implements EventSubscriberInterface
             if (strpos($poll_option['POLL_OPTION_CAPTION'], self::OptionSeparator) === false)
             {
                 // Check if the next one does
-                $is_advanced_poll = strpos($poll_options_template_data[1]['POLL_OPTION_CAPTION'], self::OptionSeparator) === 0;
+                $is_multigrouped_poll = strpos($poll_options_template_data[1]['POLL_OPTION_CAPTION'], self::OptionSeparator) === 0;
             }
         }
 
-        if ($is_advanced_poll)
+        if ($is_multigrouped_poll)
         {
             $group = 0;
             $poll_most_index = 0;
@@ -195,10 +195,10 @@ class main_listener implements EventSubscriberInterface
 
             $event['poll_options_template_data'] = $poll_options_template_data;
 
-            // We don't need the poll to show. We will show it ourselves in the advanced format
+            // We don't need the poll to show. We will show it ourselves in the multi-grouped format
             $poll_template_data = $event['poll_template_data'];
             $poll_template_data['S_HAS_POLL'] = false;
-            $poll_template_data['S_HAS_ADVANCED_POLL'] = true;
+            $poll_template_data['S_HAS_MULTIGROUPED_POLL'] = true;
             $event['poll_template_data'] = $poll_template_data;
         }
 	}
