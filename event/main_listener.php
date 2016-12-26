@@ -78,6 +78,7 @@ class main_listener implements EventSubscriberInterface
             $poll_most_list = array();
             $poll_totals = array();
             $poll_option_group_heading = '';
+            $poll_group_option_count = array();
             for($i = 0; $i < count($poll_options_template_data); $i++)
             {
                 $poll_option = $poll_options_template_data[$i];
@@ -89,6 +90,7 @@ class main_listener implements EventSubscriberInterface
                     $group++;
                     $poll_option_group_heading = $poll_option['POLL_OPTION_CAPTION'];
                     $poll_totals[$group] = 0;
+                    $poll_group_option_count[$group] = 0;
                     if ($i > 0)
                     {
                         $poll_options_template_data[$i - 1]['POLL_OPTION_LAST'] = true;
@@ -96,6 +98,7 @@ class main_listener implements EventSubscriberInterface
                 }
                 elseif (strlen($poll_option['POLL_OPTION_CAPTION']) > 1)
                 {
+                    $poll_group_option_count[$group] += 1;
                     $poll_option['POLL_OPTION_GROUP_HEADING'] = $poll_option_group_heading;
                     // Remove the separator
                     $poll_option['POLL_OPTION_CAPTION'] = substr($poll_option['POLL_OPTION_CAPTION'], 1);
@@ -160,10 +163,12 @@ class main_listener implements EventSubscriberInterface
 
                 if ($poll_option['POLL_OPTION_GROUP_HEADING'] !== '')
                 {
-                    $poll_total = $poll_totals[$poll_option['POLL_OPTION_GROUP']];
+                    $group = $poll_option['POLL_OPTION_GROUP'];
+                    $group_option_count = $poll_group_option_count[$group];
+                    $poll_total = $poll_totals[$group];
                     $option_pct = ($poll_total > 0) ? $poll_option['POLL_OPTION_RESULT'] / $poll_total : 0;
                     $option_pct_txt = sprintf("%.1d%%", round($option_pct * 100));
-                    $poll_most = isset($poll_most_list[$poll_option['POLL_OPTION_GROUP']]) ? $poll_most_list[$poll_option['POLL_OPTION_GROUP']] : 0;
+                    $poll_most = isset($poll_most_list[$group]) ? $poll_most_list[$group] : 0;
                     $option_pct_rel = ($poll_most > 0) ? $poll_option['POLL_OPTION_RESULT'] / $poll_most : 0;
                     $option_pct_rel_txt = sprintf("%.1d%%", round($option_pct_rel * 100));
 
@@ -172,17 +177,19 @@ class main_listener implements EventSubscriberInterface
                     $poll_option['POLL_OPTION_PCT'] = round($option_pct * 100);
                     $poll_option['POLL_OPTION_WIDTH'] = round($option_pct * 250);
                     $poll_option['TOTAL_VOTES'] = $poll_total;
+                    // We're leaving 20% width to the first column
+                    $poll_option['POLL_OPTION_COL_WIDTH'] = round(80 / $group_option_count);
                 }
 
                 $poll_options_template_data[$i] = $poll_option;
 
                 $this->template->assign_block_vars('poll_options_data', $poll_option);
 
-                if ($poll_option['POLL_OPTION_GROUP_HEADING'] != '')
+                if ($poll_option['POLL_OPTION_GROUP_HEADING'] !== '')
                 {
                     $poll_results[] = array(
                         'POLL_OPTION_VOTER_LIST'    => $voter_list,
-                        'POLL_OPTION_GROUP'         => $poll_option['POLL_OPTION_GROUP'],
+                        'POLL_OPTION_GROUP'         => $group,
                     );
                 }
 

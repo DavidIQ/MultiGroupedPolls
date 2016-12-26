@@ -7,16 +7,16 @@
     <tr>
         <th>&nbsp;</th>
 <!-- ELSE -->
-        <th class="info">{poll_options_data.POLL_OPTION_CAPTION}</th>
+        <th class="info" style="width: {poll_options_data.POLL_OPTION_COL_WIDTH}%;">{poll_options_data.POLL_OPTION_CAPTION}</th>
 <!-- ENDIF -->
 <!-- IF poll_options_data.POLL_OPTION_LAST -->
     </tr>
     </thead>
     <tbody>
     <tr class="bg1">
-        <td style="border: 1px solid #cccccc">{poll_options_data.POLL_OPTION_GROUP_HEADING}</td>
+        <td style="border: 1px solid #cccccc;">{poll_options_data.POLL_OPTION_GROUP_HEADING}</td>
         <!-- BEGIN results -->
-        <td style="border: 1px solid #cccccc">{poll_options_data.results.POLL_OPTION_VOTER_LIST}</td>
+        <td style="border: 1px solid #cccccc; width: {poll_options_data.POLL_OPTION_COL_WIDTH}%;">{poll_options_data.results.POLL_OPTION_VOTER_LIST}</td>
         <!-- END results -->
     </tr>
     </tbody>
